@@ -13,11 +13,6 @@ args = sys.argv
 llm = OpenAI(openai_api_key=key)
 prompt = load_prompt("prompt.json")
 
-# prompt = PromptTemplate(
-#     input_variables=["adjective", "content"],
-#     template="{adjective}{content}といえば？"
-# )
-
-# print(prompt.format(adjective="大きい", content="犬"))
 chain = LLMChain(llm=llm, prompt=prompt)
-print(chain.run(adjective="大きい", content="犬"))
+result = chain.run(hoshi_go="雪の茅舎,伯楽星,冩楽", hoshi_yon="ささのつゆ", hoshi_san="久保田,田酒", hoshi_ni="作,ロ万", hoshi_ichi="上善如水")
+print(result)

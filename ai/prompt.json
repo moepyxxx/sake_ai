@@ -1,4 +1,10 @@
 {
-  "input_variables": ["adjective", "content"],
+  "input_variables": [
+    "hoshi_go",
+    "hoshi_yon",
+    "hoshi_san",
+    "hoshi_ni",
+    "hoshi_ichi"
+  ],
   "template_path": "template.txt"
 }
