@@ -1,0 +1,6 @@
+uvicorn==0.15.0
+
+fastapi
+openai
+langchain
+python-dotenv
