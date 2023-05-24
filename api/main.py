@@ -12,7 +12,7 @@ load_dotenv()
 key = os.getenv('OPENAI_API_KEY')
 app = FastAPI()
 
-llm = OpenAI(openai_api_key=key)
+llm = OpenAI(model_name="text-davinci-003",openai_api_key=key, max_tokens=-1)
 prompt = load_prompt("prompt.json")
 
 class SakeReview(BaseModel):
