@@ -1,17 +1,17 @@
 "use client";
 import { useForm } from "react-hook-form";
 
-type TLoginForm = {
+type TSignInForm = {
   email: string;
   password: string;
 };
-export const LoginForm: React.FC = () => {
+export const SignInForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<TLoginForm>();
+  } = useForm<TSignInForm>();
   const onSubmit = handleSubmit((data) => console.log(data));
 
   return (

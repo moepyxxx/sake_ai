@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/components/SignInForm";
 import { SakeCard, TSake } from "@/components/SakeCard";
 import { Title } from "@/components/Title";
 import Image from "next/image";
