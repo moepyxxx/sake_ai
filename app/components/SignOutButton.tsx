@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -10,16 +11,17 @@ export const SignOutButton: React.FC<Props> = ({ handleSignOut }) => {
   const router = useRouter();
 
   return (
-    <div className="pb-52">
-      <button
-        onClick={async () => {
-          await handleSignOut();
-          alert("サインアウトしました");
-          router.push("/signin");
-        }}
-      >
-        sign out
-      </button>
-    </div>
+    <button
+      onClick={async () => {
+        await handleSignOut();
+        alert("サインアウトしました");
+        router.push("/signin");
+      }}
+    >
+      <span className="flex flex-col items-center">
+        <Image src="/icon/signout.svg" width={28} height={28} alt="sign out" />
+        <span className="text-xs">sign out</span>
+      </span>
+    </button>
   );
 };

@@ -41,13 +41,13 @@ export const BottomNavigationBar: React.FC = () => {
         </Link>
         <Link href="/" className="text-center">
           <Image
-            src="icon/logout.svg"
-            alt="logout"
+            src="icon/settings.svg"
+            alt="settings"
             width={32}
             height={32}
             className="inline"
           />
-          <p className="text-sm">logout</p>
+          <p className="text-sm">settings</p>
         </Link>
       </div>
     </section>

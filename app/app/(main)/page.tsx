@@ -55,7 +55,6 @@ export default function Home() {
           <SakeCard key={sake.name} sake={sake} />
         ))}
       </div>
-      <SignOutButton handleSignOut={handleSignOut} />
     </main>
   );
 }
