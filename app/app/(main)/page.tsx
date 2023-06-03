@@ -1,10 +1,18 @@
-import { LoginForm } from "@/components/SignInForm";
 import { SakeCard, TSake } from "@/components/SakeCard";
+import { SignOutButton } from "@/components/SignOutButton";
 import { Title } from "@/components/Title";
-import Image from "next/image";
-import { useForm } from "react-hook-form";
+import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 export default function Home() {
+  const handleSignOut = async () => {
+    "use server";
+    const supabase = createServerActionClient<any>({ cookies });
+    await supabase.auth.signOut();
+    revalidatePath("/signin");
+  };
+
   const sake: TSake[] = [
     {
       name: "雪の茅舎",
@@ -47,6 +55,7 @@ export default function Home() {
           <SakeCard key={sake.name} sake={sake} />
         ))}
       </div>
+      <SignOutButton handleSignOut={handleSignOut} />
     </main>
   );
 }

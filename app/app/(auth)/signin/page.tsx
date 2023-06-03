@@ -30,7 +30,7 @@ export default function SignIn() {
   return (
     <>
       <Title title="signin" description="sake aiへようこそ" />
-      <SignInForm handleAuth={handleSignIn} type="signin" />
+      <SignInForm handleSignIn={handleSignIn} />
       <div className="text-center pt-3">
         <p>
           サインアップは

@@ -9,10 +9,10 @@ export type TAuthForm = {
 };
 
 type Props = {
-  handleSignIn: (data: TAuthForm) => Promise<boolean>;
+  handleSignUp: (data: TAuthForm) => Promise<boolean>;
 };
 
-export const SignInForm: React.FC<Props> = ({ handleSignIn }) => {
+export const SignUpForm: React.FC<Props> = ({ handleSignUp }) => {
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const router = useRouter();
   const {
@@ -25,16 +25,19 @@ export const SignInForm: React.FC<Props> = ({ handleSignIn }) => {
 
   useEffect(() => {
     if (isSuccess === true) {
-      router.push("/");
+      alert(
+        "お使いのメールアドレス当てに確認メールを送信しました。メール確認後、ログイン画面からログインしてください"
+      );
+      router.push("/signin");
     }
     if (isSuccess === false) {
-      alert("認証に失敗しました");
+      alert("サインアップに失敗しました");
       reset();
     }
   }, [isSuccess, router, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    const result = await handleSignIn(data);
+    const result = await handleSignUp(data);
     setIsSuccess(result);
   });
 
@@ -59,7 +62,7 @@ export const SignInForm: React.FC<Props> = ({ handleSignIn }) => {
           <input
             className="inline-block w-60 py-3 px-4 bg-cyan-600 rounded-lg text-white"
             type="submit"
-            value="signin"
+            value="signup"
           />
         </div>
       </form>
