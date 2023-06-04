@@ -41,7 +41,7 @@ export const SignInForm: React.FC<Props> = ({ handleSignIn }) => {
 
   useEffect(() => {
     if (isSuccess === true) {
-      router.push("/");
+      router.push("/home");
     }
     if (isSuccess === false) {
       alert("認証に失敗しました");
