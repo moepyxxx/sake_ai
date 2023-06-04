@@ -2,6 +2,7 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
+import { Database } from "./types/schema";
 // import type { Database } from "@/lib/database.types";
 
 export const config = {
@@ -17,9 +18,6 @@ export const config = {
   ],
 };
 
-// TODO
-type Database = any;
-
 export async function middleware(req: NextRequest) {
   if (
     req.nextUrl.pathname.startsWith("/signin") ||
@@ -34,12 +32,8 @@ export async function middleware(req: NextRequest) {
   const auth = await supabase.auth.getSession();
 
   if (auth.data.session == null) {
-    console.log("auth data null");
-
     return NextResponse.redirect("http://localhost:3000/signin");
   }
-
-  console.log("auth set");
 
   return res;
 }
