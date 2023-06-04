@@ -2,6 +2,21 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+export const authSchema = yup
+  .object({
+    email: yup
+      .string()
+      .required("必須です")
+      .email("メール形式で入力してください"),
+    password: yup
+      .string()
+      .required("必須です")
+      .min(8, "8文字以上入力してください"),
+  })
+  .required();
 
 export type TAuthForm = {
   email: string;
@@ -18,10 +33,11 @@ export const SignInForm: React.FC<Props> = ({ handleSignIn }) => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
-  } = useForm<TAuthForm>();
+  } = useForm<TAuthForm>({
+    resolver: yupResolver(authSchema),
+  });
 
   useEffect(() => {
     if (isSuccess === true) {
@@ -43,8 +59,12 @@ export const SignInForm: React.FC<Props> = ({ handleSignIn }) => {
       <form onSubmit={onSubmit}>
         <div className="mb-6">
           <label className="text-base mb-3 block">user id ( email )</label>
-          <input className="w-full p-4 rounded-lg" {...register("email")} />
-          <p>{errors.email?.message}</p>
+          <input
+            className="w-full p-4 rounded-lg"
+            aria-invalid={errors.email ? "true" : "false"}
+            {...register("email")}
+          />
+          <p className="text-sm text-rose-600 mt-2">{errors.email?.message}</p>
         </div>
         <div className="mb-6">
           <label className="text-base mb-3 block">password</label>
@@ -53,7 +73,9 @@ export const SignInForm: React.FC<Props> = ({ handleSignIn }) => {
             type="password"
             {...register("password")}
           />
-          <p>{errors.password?.message}</p>
+          <p className="text-sm text-rose-600 mt-2">
+            {errors.password?.message}
+          </p>
         </div>
         <div className="text-center">
           <input

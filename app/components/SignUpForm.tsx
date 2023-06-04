@@ -2,6 +2,9 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { authSchema } from "./SignInForm";
 
 export type TAuthForm = {
   email: string;
@@ -18,10 +21,11 @@ export const SignUpForm: React.FC<Props> = ({ handleSignUp }) => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
-  } = useForm<TAuthForm>();
+  } = useForm<TAuthForm>({
+    resolver: yupResolver(authSchema),
+  });
 
   useEffect(() => {
     if (isSuccess === true) {
@@ -47,7 +51,7 @@ export const SignUpForm: React.FC<Props> = ({ handleSignUp }) => {
         <div className="mb-6">
           <label className="text-base mb-3 block">user id ( email )</label>
           <input className="w-full p-4 rounded-lg" {...register("email")} />
-          <p>{errors.email?.message}</p>
+          <p className="text-sm text-rose-600 mt-2">{errors.email?.message}</p>
         </div>
         <div className="mb-6">
           <label className="text-base mb-3 block">password</label>
@@ -56,7 +60,9 @@ export const SignUpForm: React.FC<Props> = ({ handleSignUp }) => {
             type="password"
             {...register("password")}
           />
-          <p>{errors.password?.message}</p>
+          <p className="text-sm text-rose-600 mt-2">
+            {errors.password?.message}
+          </p>
         </div>
         <div className="text-center">
           <input
