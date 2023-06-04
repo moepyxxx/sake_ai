@@ -1,31 +1,17 @@
-import { SakeCard } from "@/components/SakeCard";
+import { SakeReviewCard } from "@/components/SakeReviewCard";
 import { Title } from "@/components/Title";
+import { TSakeEvaluation, TSakeReview } from "@/types/app";
 import { Database } from "@/types/schema";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-export type TSakeEvaluation = 1 | 2 | 3 | 4 | 5;
-
-export type TSakeReview = {
-  id: number;
-  sake: {
-    id: number;
-    name: string;
-    prefecture: number;
-  };
-  review: string;
-  evaluation: TSakeEvaluation;
-  created_at: string;
-  updated_at: string;
-};
-
 export default async function Home() {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: rawReviews } = await supabase.from("sake_reviews").select();
-  const sakes: any = [];
+  const sakes: Database["public"]["Tables"]["sakes"]["Row"][] = [];
   const sakeReviews: TSakeReview[] = await Promise.all(
     rawReviews!.map(async (raw) => {
-      const alreadyExist = sakes.find((sake: any) => sake.id === raw.sake_id);
+      const alreadyExist = sakes.find((sake) => sake.id === raw.sake_id);
       if (alreadyExist) {
         return {
           id: raw.id,
@@ -58,7 +44,7 @@ export default async function Home() {
       <Title title="sake archive" description="あなたが最近飲んでいたsake" />
       <div>
         {sakeReviews.map((sakeReview) => (
-          <SakeCard key={sakeReview.id} sakeReview={sakeReview} />
+          <SakeReviewCard key={sakeReview.id} sakeReview={sakeReview} />
         ))}
       </div>
     </main>

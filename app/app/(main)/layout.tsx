@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { SignOutButton } from "@/components/SignOutButton";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import { Database } from "@/types/schema";
 
 const inter = Lato({ weight: ["400", "700"], subsets: ["latin-ext"] });
 
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   const handleSignOut = async () => {
     "use server";
-    const supabase = createServerActionClient<any>({ cookies });
+    const supabase = createServerActionClient<Database>({ cookies });
     await supabase.auth.signOut();
   };
 
