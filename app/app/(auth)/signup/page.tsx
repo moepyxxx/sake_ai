@@ -4,12 +4,13 @@ import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { SignUpForm, TAuthForm } from "@/components/SignUpForm";
+import { Database } from "@/types/schema";
 
 export default function SignUp() {
   const handleSignUp = async (authData: TAuthForm) => {
     "use server";
 
-    const supabase = createServerActionClient<TAuthForm>({ cookies });
+    const supabase = createServerActionClient<Database>({ cookies });
     await supabase.auth.signUp({
       email: authData.email,
       password: authData.password,

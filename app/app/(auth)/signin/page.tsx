@@ -5,12 +5,13 @@ import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { isAuthError } from "@supabase/supabase-js";
+import { Database } from "@/types/schema";
 
 export default function SignIn() {
   const handleSignIn = async (formData: TAuthForm): Promise<boolean> => {
     "use server";
 
-    const supabase = createServerActionClient<TAuthForm>({ cookies });
+    const supabase = createServerActionClient<Database>({ cookies });
     const res = await supabase.auth.signInWithPassword({
       email: formData.email,
       password: formData.password,
