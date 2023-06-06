@@ -5,7 +5,8 @@ import { Database } from "@/types/schema";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-export default async function Home() {
+const getSakeReviews = async (): Promise<TSakeReview[]> => {
+  console.log("get sake?");
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: rawReviews } = await supabase.from("sake_reviews").select();
   const sakes: Database["public"]["Tables"]["sakes"]["Row"][] = [];
@@ -38,6 +39,11 @@ export default async function Home() {
       };
     })
   );
+  return sakeReviews;
+};
+
+export default async function Home() {
+  const sakeReviews = await getSakeReviews();
 
   return (
     <>
