@@ -19,10 +19,10 @@ export const SakeReviewsList: React.FC<Props> = ({
   }, [fetchSakeReviewsAction]);
 
   return (
-    <div>
+    <>
       {sakeReviews.map((sakeReview) => (
         <SakeReviewCard key={sakeReview.id} sakeReview={sakeReview} />
       ))}
-    </div>
+    </>
   );
 };
