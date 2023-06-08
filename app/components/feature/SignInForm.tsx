@@ -24,10 +24,10 @@ export type TAuthForm = {
 };
 
 type Props = {
-  handleSignIn: (data: TAuthForm) => Promise<boolean>;
+  signInAction: (data: TAuthForm) => Promise<boolean>;
 };
 
-export const SignInForm: React.FC<Props> = ({ handleSignIn }) => {
+export const SignInForm: React.FC<Props> = ({ signInAction }) => {
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const router = useRouter();
   const {
@@ -50,7 +50,7 @@ export const SignInForm: React.FC<Props> = ({ handleSignIn }) => {
   }, [isSuccess, router, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    const result = await handleSignIn(data);
+    const result = await signInAction(data);
     setIsSuccess(result);
   });
 

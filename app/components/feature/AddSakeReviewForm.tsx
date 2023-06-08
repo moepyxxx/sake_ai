@@ -5,8 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { PREFECTURE_LIST, SAKE_EVALUATION_MAPS } from "@/lib/sake";
-import { TSakeEvaluation } from "@/types/app";
-import { TAddSakeReview } from "@/app/(main)/add_sake/page";
+import { TAddSakeReview, TSakeEvaluation } from "@/types/app";
 
 export const schema = yup
   .object({
@@ -25,10 +24,10 @@ export type TAddSakeReviewForm = {
 };
 
 type Props = {
-  handleAddSakeReview: (data: TAddSakeReview) => Promise<boolean>;
+  AddSakeReviewAction: (data: TAddSakeReview) => Promise<boolean>;
 };
 
-export const AddSakeReviewForm: React.FC<Props> = ({ handleAddSakeReview }) => {
+export const AddSakeReviewForm: React.FC<Props> = ({ AddSakeReviewAction }) => {
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const router = useRouter();
   const {
@@ -43,15 +42,16 @@ export const AddSakeReviewForm: React.FC<Props> = ({ handleAddSakeReview }) => {
   useEffect(() => {
     if (isSuccess === true) {
       alert("投稿が完了しました！");
-      reset();
+      router.push("/home");
     }
     if (isSuccess === false) {
       alert("投稿に失敗しました…");
+      reset();
     }
   }, [isSuccess, router, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    const result = await handleAddSakeReview({
+    const result = await AddSakeReviewAction({
       name: data.name,
       prefecture: Number(data.prefecture),
       evaluation: Number(data.evaluation) as TSakeEvaluation,

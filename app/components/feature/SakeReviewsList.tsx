@@ -1,6 +1,6 @@
 "use client";
 import { TSakeReview } from "@/types/app";
-import { SakeReviewCard } from "./SakeReviewCard";
+import { SakeReviewCard } from "../SakeReviewCard";
 import { useEffect, useState } from "react";
 
 type Props = {
