@@ -1,11 +1,9 @@
 "use client";
+import { signOutAction } from "@/lib/actions";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-type Props = {
-  handleSignOut: () => Promise<void>;
-};
-export const SignOutButton: React.FC<Props> = ({ handleSignOut }) => {
+export const SignOutButton: React.FC = () => {
   // see: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions#custom-invocation-using-starttransition
   // const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -13,7 +11,7 @@ export const SignOutButton: React.FC<Props> = ({ handleSignOut }) => {
   return (
     <button
       onClick={async () => {
-        await handleSignOut();
+        await signOutAction();
         alert("サインアウトしました");
         router.push("/signin");
       }}

@@ -20,9 +20,17 @@ export const SakeReviewsList: React.FC<Props> = ({
 
   return (
     <>
-      {sakeReviews.map((sakeReview) => (
+      {sakeReviews?.map((sakeReview) => (
         <SakeReviewCard key={sakeReview.id} sakeReview={sakeReview} />
       ))}
     </>
   );
 };
+
+// const [sakeReviews, setSakeReviews] = useState<TSakeReview[]>([]);
+
+// useEffect(() => {
+//   fetchSakeReviewsAction().then((action) => {
+//     setSakeReviews(action);
+//   });
+// }, [fetchSakeReviewsAction]);

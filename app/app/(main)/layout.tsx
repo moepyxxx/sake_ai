@@ -1,36 +1,26 @@
+"use client";
 import { Lato } from "next/font/google";
 import { BottomNavigationBar } from "@/components/BottomNavigationBar";
 import { Header } from "@/components/Header";
 import { SignOutButton } from "@/components/SignOutButton";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { Database } from "@/types/schema";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const inter = Lato({ weight: ["400", "700"], subsets: ["latin-ext"] });
-
-export const metadata = {
-  title: "sake ai",
-  description: "sake ai desu",
-};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const handleSignOut = async () => {
-    "use server";
-    const supabase = createServerActionClient<Database>({ cookies });
-    await supabase.auth.signOut();
-  };
+  const queryClient = new QueryClient();
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Header>
-        <SignOutButton handleSignOut={handleSignOut} />
+        <SignOutButton />
       </Header>
       <div className="p-4 mb-24">{children}</div>
       <BottomNavigationBar />
-    </>
+    </QueryClientProvider>
   );
 }

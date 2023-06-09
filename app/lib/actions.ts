@@ -11,8 +11,6 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export const fetchSakeReviewsAction = async (): Promise<TSakeReview[]> => {
-  //   await new Promise((resolve) => setTimeout(resolve, 3000));
-
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: rawReviews } = await supabase.from("sake_reviews").select();
   const sakes: Database["public"]["Tables"]["sakes"]["Row"][] = [];
@@ -123,4 +121,10 @@ export const signUpAction = async (authData: TAuthForm) => {
 
   revalidatePath("/");
   return true;
+};
+
+export const signOutAction = async () => {
+  "use server";
+  const supabase = createServerActionClient<Database>({ cookies });
+  await supabase.auth.signOut();
 };
