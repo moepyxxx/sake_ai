@@ -1,5 +1,7 @@
 "use server";
 import { TAuthForm } from "@/components/feature/SignInForm";
+import { axiosClient } from "@/config/axios";
+import { TSakeAiRequest, TSakeAiResponse } from "@/types/ai";
 import { TAddSakeReview, TSakeEvaluation, TSakeReview } from "@/types/app";
 import { Database } from "@/types/schema";
 import {
@@ -88,6 +90,57 @@ export const AddSakeReviewAction = async (
     user_id: "c5350670-28e4-483e-83c3-939158687d97",
   });
   return true;
+};
+
+export const fetchRecommendSakeAction = async (): Promise<TSakeAiResponse> => {
+  const sakeAiRequestArr: {
+    hoshi_go: string[];
+    hoshi_yon: string[];
+    hoshi_san: string[];
+    hoshi_ni: string[];
+    hoshi_ichi: string[];
+  } = {
+    hoshi_go: [],
+    hoshi_yon: [],
+    hoshi_san: [],
+    hoshi_ni: [],
+    hoshi_ichi: [],
+  };
+  const sakeReviews = await fetchSakeReviewsAction();
+  sakeReviews.forEach((review) => {
+    switch (review.evaluation) {
+      case 1:
+        sakeAiRequestArr.hoshi_ichi.push(review.sake.name);
+        break;
+      case 2:
+        sakeAiRequestArr.hoshi_ni.push(review.sake.name);
+        break;
+      case 3:
+        sakeAiRequestArr.hoshi_san.push(review.sake.name);
+        break;
+      case 4:
+        sakeAiRequestArr.hoshi_yon.push(review.sake.name);
+        break;
+      case 5:
+        sakeAiRequestArr.hoshi_go.push(review.sake.name);
+        break;
+    }
+  });
+
+  const sakeAiRequest: TSakeAiRequest = {
+    hoshi_go: sakeAiRequestArr.hoshi_go.join(","),
+    hoshi_yon: sakeAiRequestArr.hoshi_yon.join(","),
+    hoshi_san: sakeAiRequestArr.hoshi_san.join(","),
+    hoshi_ni: sakeAiRequestArr.hoshi_ni.join(","),
+    hoshi_ichi: sakeAiRequestArr.hoshi_ichi.join(","),
+  };
+  //   const res = await axiosClient.post<TSakeAiResponse>("", sakeAiRequest);
+  //   return res.data;
+  return {
+    recommend: "おすすめのsakeはこれだよ",
+    analytics:
+      "好きな日本酒には、飲みやすさ、深みのある味わい、フルーティで香ばしい香り、旨味のある後味などがあります。また、品種、生産地、精米歩合なども重要な要素となります。",
+  };
 };
 
 export const signInAction = async (formData: TAuthForm): Promise<boolean> => {

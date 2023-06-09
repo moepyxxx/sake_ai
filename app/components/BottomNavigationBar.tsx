@@ -34,8 +34,8 @@ export const BottomNavigationBar: React.FC = () => {
     {
       name: "for you",
       path: "/for_you",
-      icon: <ForYouSvg color="rgb(203 213 225)" size={32} />,
-      disabled: true,
+      icon: <ForYouSvg color="rgb(8 145 178)" size={32} />,
+      disabled: false,
     },
     {
       name: "history",
