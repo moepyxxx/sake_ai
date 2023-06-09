@@ -26,11 +26,3 @@ export const SakeReviewsList: React.FC<Props> = ({
     </>
   );
 };
-
-// const [sakeReviews, setSakeReviews] = useState<TSakeReview[]>([]);
-
-// useEffect(() => {
-//   fetchSakeReviewsAction().then((action) => {
-//     setSakeReviews(action);
-//   });
-// }, [fetchSakeReviewsAction]);
