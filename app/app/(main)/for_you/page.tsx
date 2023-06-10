@@ -6,10 +6,18 @@ export default async function ForYouPage() {
   return (
     <>
       <Title title="for you" description="あなたのsakeをaiが解説するよ" />
-      <p>あなたに次におすすめのsake</p>
-      <p>{recommend}</p>
-      <p>あなたのsake嗜好</p>
-      <p>{analytics}</p>
+      <div className="p-4 text-white bg-cyan-600 rounded-lg mb-4">
+        <div className="text-center pb-3">
+          <p className="text-lg">あなたに次におすすめのsake</p>
+        </div>
+        <p className="leading-7">{recommend}</p>
+      </div>
+      <div className="p-4 text-white bg-cyan-600 rounded-lg">
+        <div className="text-center pb-3">
+          <p className="text-lg">あなたのsake嗜好</p>
+        </div>
+        <p className="leading-7">{analytics}</p>
+      </div>
     </>
   );
 }

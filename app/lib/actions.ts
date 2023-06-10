@@ -1,5 +1,6 @@
 "use server";
 import { TAuthForm } from "@/components/feature/SignInForm";
+import { axiosClient } from "@/config/axios";
 import { TSakeAiRequest, TSakeAiResponse } from "@/types/ai";
 import { TAddSakeReview, TSakeEvaluation, TSakeReview } from "@/types/app";
 import { Database } from "@/types/schema";
@@ -137,13 +138,8 @@ export const fetchRecommendSakeAction = async (): Promise<TSakeAiResponse> => {
     hoshi_ni: sakeAiRequestArr.hoshi_ni.join(","),
     hoshi_ichi: sakeAiRequestArr.hoshi_ichi.join(","),
   };
-  //   const res = await axiosClient.post<TSakeAiResponse>("", sakeAiRequest);
-  //   return res.data;
-  return {
-    recommend: "おすすめのsakeはこれだよ",
-    analytics:
-      "好きな日本酒には、飲みやすさ、深みのある味わい、フルーティで香ばしい香り、旨味のある後味などがあります。また、品種、生産地、精米歩合なども重要な要素となります。",
-  };
+  const res = await axiosClient.post<TSakeAiResponse>("", sakeAiRequest);
+  return res.data;
 };
 
 export const signInAction = async (formData: TAuthForm): Promise<boolean> => {
