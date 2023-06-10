@@ -82,12 +82,16 @@ export const AddSakeReviewAction = async (
     sakeId = sakes[0].id;
   }
 
+  const userId = (await supabase.auth.getUser()).data.user?.id;
+  if (userId == null) {
+    throw new Error("認証エラーです");
+  }
+
   await supabase.from("sake_reviews").insert({
     sake_id: sakeId,
     review: formData.review,
     evaluation: formData.evaluation,
-    // TODO: とってこれるようにする
-    user_id: "c5350670-28e4-483e-83c3-939158687d97",
+    user_id: userId,
   });
   return true;
 };
