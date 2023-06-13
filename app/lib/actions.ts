@@ -13,7 +13,10 @@ import { cookies } from "next/headers";
 
 export const fetchSakeReviewsAction = async (): Promise<TSakeReview[]> => {
   const supabase = createServerComponentClient<Database>({ cookies });
-  const { data: rawReviews } = await supabase.from("sake_reviews").select();
+  const { data: rawReviews } = await supabase
+    .from("sake_reviews")
+    .select()
+    .order("created_at", { ascending: false });
   const sakes: Database["public"]["Tables"]["sakes"]["Row"][] = [];
   const sakeReviews: TSakeReview[] = await Promise.all(
     rawReviews!.map(async (raw) => {
