@@ -9,7 +9,6 @@ import {
   createServerComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 import { isAuthError } from "@supabase/supabase-js";
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export const fetchSakeReviewsAction = async (): Promise<TSakeReview[]> => {
@@ -156,8 +155,6 @@ export const signInAction = async (formData: TAuthForm): Promise<boolean> => {
       throw Error("予期しないエラー");
     }
   }
-
-  revalidatePath("/");
   return true;
 };
 
@@ -170,8 +167,6 @@ export const signUpAction = async (authData: TAuthForm) => {
       emailRedirectTo: "http://localhost:3000/success",
     },
   });
-
-  revalidatePath("/");
   return true;
 };
 
