@@ -1,5 +1,6 @@
 import { PREFECTURE_LIST, SAKE_EVALUATION_MAPS } from "@/lib/sake";
 import { TSakeReview } from "@/types/app";
+import { format, parseISO } from "date-fns";
 
 type Props = {
   sakeReview: TSakeReview;
@@ -15,8 +16,9 @@ export const SakeReviewCard: React.FC<Props> = ({ sakeReview }) => {
         {sakeReview.sake.name}（{PREFECTURE_LIST[sakeReview.sake.prefecture]}）
       </p>
       <p className="mt-2">{sakeReview.review}</p>
-      {/** todo date format */}
-      <p className="mt-2 text-slate-400">2023-05-20</p>
+      <p className="mt-2 text-slate-400">
+        {format(parseISO(sakeReview.created_at), "yyyy-MM-dd HH:mm")}
+      </p>
     </div>
   );
 };
